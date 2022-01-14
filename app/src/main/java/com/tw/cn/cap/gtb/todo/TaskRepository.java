@@ -13,10 +13,7 @@ public class TaskRepository {
         List<String> lines = readTaskLines();
         ArrayList<Task> tasks = new ArrayList<Task>();
         for (int i = 0; i < lines.size(); i++) {
-            int id = i + 1;
-            String line = lines.get(i);
-            String name = line.split(" ",2)[1 ];
-            Task task = new Task(id, name);
+            Task task = TaskFactory.createTask(i + 1, lines.get(i));
             tasks.add(task);
         }
         return tasks;
