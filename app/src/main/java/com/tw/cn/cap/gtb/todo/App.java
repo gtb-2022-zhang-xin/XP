@@ -1,20 +1,37 @@
 package com.tw.cn.cap.gtb.todo;
 
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
  * @author zhangxin
  */
 public class App {
-    private final TaskRepository taskRepository = new TaskRepository();
-        public List<String> run () {
-            ArrayList<Task> tasks = taskRepository.loadTasks();
-            List<String> result = new ArrayList<>();
-            result.add("#To Be Done");
-            for (Task task : tasks) {
-                result.add(task.format());
-            }
-            return result;
-        }
+    private final ListCommand listCommand = new ListCommand();
+
+    public static void main(String[] args) {
+        new App().run().forEach(System.out::println);
+        throw new UnsupportedOperationException();
     }
+
+
+    public List<String> run(String... args) {
+        if (args.length > 0 && "add".equals(args[0])) {
+            try (BufferedWriter bw = Files.newBufferedWriter(Constants.FILE_PATH, StandardOpenOption.APPEND)) {
+                bw.write("+ task");
+                bw.newLine();
+            } catch (IOException e) {
+                throw new CannotReadFileException();
+            }
+
+            System.out.println("++");
+//            return List.of();
+        }
+        return listCommand.run();
+    }
+
+}

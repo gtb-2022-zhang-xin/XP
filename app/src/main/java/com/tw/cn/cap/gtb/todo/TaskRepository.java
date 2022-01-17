@@ -9,9 +9,9 @@ import java.util.List;
  * @author zhangxin
  */
 public class TaskRepository {
-    ArrayList<Task> loadTasks() {
+    List<Task> loadTasks() {
         List<String> lines = readTaskLines();
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        List<Task> tasks = new ArrayList<Task>();
         for (int i = 0; i < lines.size(); i++) {
             Task task = TaskFactory.createTask(i + 1, lines.get(i));
             tasks.add(task);

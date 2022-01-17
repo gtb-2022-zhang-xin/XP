@@ -16,6 +16,13 @@ class AppTest {
     void should_list_existing_tasks() throws IOException {
         List<String> result = new App().run();
         Assertions.assertEquals(List.of("#To Be Done","1 task 01","2 task 02",
-                "#Completed","3 task 03","4 task 04"), result);
+                "#Completed","3 task 03"), result);
+    }
+    @Test
+    void should_add_with_single_name (){
+        List<String> result = new App().run("add","task");
+//        List<String> result = new App().run();
+        Assertions.assertEquals(List.of("#To Be Done","1 task 01","2 task 02","4 task",
+                "#Completed","3 task 03"), result);
     }
 }
