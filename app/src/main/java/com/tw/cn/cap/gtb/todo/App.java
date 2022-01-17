@@ -1,7 +1,6 @@
 package com.tw.cn.cap.gtb.todo;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -21,17 +20,21 @@ public class App {
 
     public List<String> run(String... args) {
         if (args.length > 0 && "add".equals(args[0])) {
-            try (BufferedWriter bw = Files.newBufferedWriter(Constants.FILE_PATH, StandardOpenOption.APPEND)) {
-                bw.write("+ task");
-                bw.newLine();
-            } catch (IOException e) {
-                throw new CannotReadFileException();
-            }
-
-            System.out.println("++");
-//            return List.of();
+            return execute(args);
         }
         return listCommand.run();
+
+    }
+
+    private List<String> execute(String[] args) {
+        try (BufferedWriter bw = Files.newBufferedWriter(Constants.FILE_PATH, StandardOpenOption.APPEND)) {
+            String taskName = args[1];
+            bw.write("+ " + taskName);
+            bw.newLine();
+        } catch (IOException e) {
+            throw new CannotReadFileException();
+        }
+        return List.of();
     }
 
 }
