@@ -16,10 +16,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
+
+    private App app;
+
     @BeforeEach
     void setUp() {
         List<String> lines = List.of("+ task 01", "+ task 02", "- task 03");
         writeDataFile(lines);
+        app = new App();
     }
 
 @Nested
@@ -29,7 +33,11 @@ class AppTest {
 
             @Test
             void should_list_existing_tasks() throws IOException {
-                List<String> result = new App().run();
+                //Given
+//                App app = new App();
+                //When
+                List<String> result = app.run();
+                //Then
                 Assertions.assertEquals(List.of("#To Be Done", "1 task 01", "2 task 02",
                         "#Completed", "3 task 03"), result);
             }
@@ -45,8 +53,11 @@ class AppTest {
 
             @Test
             void should_add_with_single_name() {
+                //Given
+                //When
                 new App().run("add", "task");
-                List<String> result = new App().run();
+                //Then
+                List<String> result = app.run();
                 Assertions.assertEquals(List.of("#To Be Done", "1 task 01", "2 task 02", "4 task",
                         "#Completed", "3 task 03"), result);
             }
