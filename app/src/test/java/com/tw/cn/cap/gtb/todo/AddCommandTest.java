@@ -13,22 +13,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddCommandTest {
     @Test
     void should_compose_task_name_with_multiple_args() {
-        var  taskRepository = new TaskRepository() {
-            private Task task;
-
-            @Override
-            List<String> create(Task task) {
-                 this.task=task;
-                return List.of();
-            }
-
-            public String getTaskName() {
-                return this.task.getName();
-            }
-        };
+        var taskRepository = new MyTaskRepository();
         AddCommand addCommand = new AddCommand(taskRepository, "add", "fizz", "buzz");
         addCommand.execute();
         String taskName = taskRepository.getTaskName();
         assertEquals("fizz buzz", taskName);
     }
+
+
+    private static class MyTaskRepository extends TaskRepository {
+        private Task task;
+
+        @Override
+        List<String> create(Task task) {
+            this.task = task;
+            return List.of();
+        }
+
+        public String  getTaskName() {
+            return this.task.getName();
+        }
+    }
 }
+
+
+
+
